@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Is My Medicare Plan Ending? — NorthStar Medicare Advisors</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: #f4f6f8;
+    color: #1a1a1a;
+    font-size: 20px;
+    line-height: 1.55;
+  }
+  .demo-badge {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #8a1c1c;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    padding: 6px 10px;
+    border-radius: 4px;
+    z-index: 999;
+    opacity: 0.92;
+  }
+  .brand-bar {
+    background: #0b3d66;
+    color: #ffffff;
+    padding: 22px 16px;
+    text-align: center;
+  }
+  .brand-bar .logo { font-size: 30px; font-weight: bold; letter-spacing: 0.01em; }
+  .brand-bar .tagline { font-size: 17px; color: #cfe2f1; margin-top: 4px; font-style: italic; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { font-size: 32px; line-height: 1.25; color: #0b3d66; margin-bottom: 10px; }
+  .sub { font-size: 20px; margin-bottom: 26px; }
+  .card {
+    background: #ffffff;
+    border: 2px solid #0b3d66;
+    border-radius: 10px;
+    padding: 26px 24px;
+    margin-bottom: 26px;
+  }
+  label { display: block; font-weight: bold; font-size: 20px; margin: 18px 0 6px; }
+  label:first-of-type { margin-top: 0; }
+  select, input[type="text"], input[type="tel"], input[type="email"] {
+    width: 100%;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 13px 12px;
+    border: 2px solid #555;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #1a1a1a;
+  }
+  select:focus, input:focus { outline: 3px solid #f2b705; outline-offset: 1px; }
+  .btn {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    background: #0b3d66;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .btn:hover { background: #09508a; }
+  .fineprint { font-size: 13.5px; color: #444; font-family: Arial, Helvetica, sans-serif; line-height: 1.45; margin-top: 14px; }
+  #result { display: none; }
+  .result-ending { border-color: #8a1c1c; }
+  .result-ending h2 { color: #8a1c1c; font-size: 29px; line-height: 1.3; margin-bottom: 10px; }
+  .result-unknown { border-color: #555; }
+  .result-unknown h2 { color: #0b3d66; font-size: 29px; line-height: 1.3; margin-bottom: 10px; }
+  .deadlines {
+    background: #fdf3e3;
+    border: 2px solid #b97e10;
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin: 18px 0;
+  }
+  .deadlines h3 { font-size: 22px; color: #6e4a00; margin-bottom: 8px; }
+  .deadlines p { margin-bottom: 8px; }
+  .deadlines p:last-child { margin-bottom: 0; }
+  .checklist { margin: 14px 0 6px 26px; }
+  .checklist li { margin-bottom: 12px; }
+  .lead-form h3 { font-size: 24px; color: #0b3d66; margin-bottom: 6px; }
+  .consent {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-top: 20px;
+    font-size: 16.5px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.45;
+  }
+  .consent input[type="checkbox"] { width: 26px; height: 26px; margin-top: 2px; flex-shrink: 0; }
+  .error { color: #8a1c1c; font-weight: bold; font-size: 17px; font-family: Arial, Helvetica, sans-serif; margin-top: 10px; display: none; }
+  .success {
+    display: none;
+    background: #e7f4e4;
+    border: 2px solid #2e6b21;
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 20px;
+  }
+  .success strong { color: #2e6b21; }
+  footer { text-align: center; padding: 0 16px 40px; }
+</style>
+</head>
+<body>
+
+<div class="demo-badge">SAMPLE DEMO — NOT A LIVE TOOL</div>
+
+<div class="brand-bar">
+  <div class="logo">NorthStar Medicare Advisors</div>
+  <div class="tagline">Clear answers about your Medicare coverage</div>
+</div>
+
+<div class="wrap">
+
+  <h1>Is your Medicare plan ending in 2027?</h1>
+  <p class="sub">Many Medicare Advantage plans are being discontinued on December 31, 2026. Enter your plan details below and we'll tell you what we know — and exactly what to do next.</p>
+
+  <div class="card">
+    <form id="checker-form" novalidate>
+      <label for="insurer">Your insurance company</label>
+      <select id="insurer" required>
+        <option value="">— Choose one —</option>
+        <option value="UnitedHealthcare">UnitedHealthcare</option>
+        <option value="Humana">Humana</option>
+        <option value="Aetna">Aetna</option>
+        <option value="Blue Cross Blue Shield">Blue Cross Blue Shield</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="plan">Your plan name <span style="font-weight:normal;">(as shown on your card or letter)</span></label>
+      <input type="text" id="plan" placeholder="e.g. Gold Plus HMO" autocomplete="off">
+
+      <label for="zip">Your ZIP code</label>
+      <input type="text" id="zip" placeholder="e.g. 90210" maxlength="5" inputmode="numeric" autocomplete="postal-code">
+
+      <div class="error" id="checker-error">Please choose your insurance company and enter a valid 5-digit ZIP code.</div>
+
+      <button type="submit" class="btn">Check My Plan</button>
+      <p class="fineprint">This demonstration uses a small sample dataset and does not check live plan data. Your entries stay on this page — nothing is sent anywhere.</p>
+    </form>
+  </div>
+
+  <!-- RESULT: PLAN ENDING -->
+  <div class="card result-ending" id="result-ending">
+    <h2 id="ending-headline">Your plan is ending</h2>
+    <p id="ending-body"></p>
+
+    <div class="deadlines">
+      <h3>Your deadlines</h3>
+      <p><strong>Special Enrollment Period: December 8, 2026 – February 28, 2027.</strong> Because your plan is ending, you get this extra window to enroll in a new Medicare Advantage or Part D plan.</p>
+      <p><strong>Medigap guaranteed-issue window:</strong> You also have a guaranteed right to buy a Medicare Supplement (Medigap) policy — no health questions, no denial for pre-existing conditions. You can apply starting 60 days before your plan ends, up to 63 days after it ends. Do not let this window close.</p>
+      <p><strong>Avoid a coverage gap:</strong> Enroll in December and your new coverage starts January 1, 2027 — the day after your current plan ends.</p>
+    </div>
+
+    <h3 style="font-size:23px; color:#0b3d66;">Your personal checklist</h3>
+    <ol class="checklist" id="ending-checklist"></ol>
+
+    <div class="lead-form" data-lead-form></div>
+  </div>
+
+  <!-- RESULT: COULDN'T CONFIRM -->
+  <div class="card result-unknown" id="result-unknown">
+    <h2>We couldn't confirm your plan's status</h2>
+    <p id="unknown-body"></p>
+    <p style="margin-top:10px;">Plans change county by county, and a plan with the same name can be ending in one place and continuing in another. A licensed advisor can check your exact plan in a few minutes — at no cost to you.</p>
+    <div class="lead-form" data-lead-form></div>
+  </div>
+
+</div>
+
+<footer>
+  <p class="fineprint" style="max-width:760px; margin:0 auto;">
+    NorthStar Medicare Advisors is a placeholder brand used for demonstration purposes only. This sample tool is provided by Protect65 for agency evaluation; it is not a live service and no information entered here is collected, stored, or transmitted.
+  </p>
+</footer>
+
+<script>
+// ---------- Sample dataset (demo only) ----------
+// A combination is "terminated" if insurer matches AND (zipPrefix is null OR ZIP starts with it)
+// AND (planIncludes is null OR plan name contains it, case-insensitive).
+var TERMINATED = [
+  { insurer: "Humana",              zipPrefix: null,  planIncludes: null },
+  { insurer: "UnitedHealthcare",    zipPrefix: "902", planIncludes: null },
+  { insurer: "Aetna",               zipPrefix: null,  planIncludes: "advantage plus" }
+];
+
+var TPMO_DISCLAIMER = "We do not offer every plan available in your area. Currently we represent [#] organizations which offer [#] products in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Program (SHIP) to get information on all of your options.";
+
+function leadFormHTML(context) {
+  return '' +
+  '<h3>' + (context === 'ending' ? 'Get free help with your next step' : 'Ask an advisor to check your plan') + '</h3>' +
+  '<p>A licensed NorthStar Medicare Advisors agent can walk you through your options — free, with no obligation to enroll.</p>' +
+  '<form class="lead-capture" novalidate>' +
+    '<label for="lf-name-' + context + '">Full name</label>' +
+    '<input type="text" id="lf-name-' + context + '" class="lf-name" autocomplete="name">' +
+    '<label for="lf-phone-' + context + '">Phone number</label>' +
+    '<input type="tel" id="lf-phone-' + context + '" class="lf-phone" autocomplete="tel">' +
+    '<label for="lf-email-' + context + '">Email address</label>' +
+    '<input type="email" id="lf-email-' + context + '" class="lf-email" autocomplete="email">' +
+    '<div class="consent">' +
+      '<input type="checkbox" id="lf-consent-' + context + '" class="lf-consent">' +
+      '<span><label for="lf-consent-' + context + '" style="display:inline; font-weight:normal; font-size:16.5px; margin:0;">Yes — I would like NorthStar Medicare Advisors to contact me about Medicare plan options. By checking this box, I give my express written consent for NorthStar Medicare Advisors to call and text me at the number I provided (including by automated means) and to email me about Medicare Advantage, Medicare Supplement, and prescription drug plans. Consent is not a condition of purchasing any product. Message and data rates may apply; reply STOP to opt out.</label></span>' +
+    '</div>' +
+    '<div class="error lf-error">Please add your name and phone number, and check the consent box so we may contact you.</div>' +
+    '<button type="submit" class="btn">Request My Free Review</button>' +
+    '<p class="fineprint">' + TPMO_DISCLAIMER + '</p>' +
+    '<p class="fineprint">Calling this number or submitting this form will direct you to a licensed insurance agent. NorthStar Medicare Advisors is not connected with or endorsed by the U.S. government or the federal Medicare program.</p>' +
+  '</form>' +
+  '<div class="success"><strong>Thank you.</strong> In a live version, your request would now be sent to NorthStar Medicare Advisors and an advisor would call you shortly. <em>(Demo only — nothing was sent.)</em></div>';
+}
+
+// Inject lead forms into both result panels
+document.querySelectorAll('[data-lead-form]').forEach(function(slot) {
+  var context = slot.closest('#result-ending') ? 'ending' : 'unknown';
+  slot.innerHTML = leadFormHTML(context);
+});
+
+// Lead form handling (demo: validate + show confirmation, send nothing)
+document.querySelectorAll('.lead-capture').forEach(function(form) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name = form.querySelector('.lf-name').value.trim();
+    var phone = form.querySelector('.lf-phone').value.trim();
+    var consent = form.querySelector('.lf-consent').checked;
+    var err = form.querySelector('.lf-error');
+    if (!name || !phone || !consent) { err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    var success = form.parentElement.querySelector('.success');
+    form.style.display = 'none';
+    success.style.display = 'block';
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+});
+
+// ---------- Checker logic ----------
+function isTerminated(insurer, plan, zip) {
+  return TERMINATED.some(function(rule) {
+    if (rule.insurer !== insurer) return false;
+    if (rule.zipPrefix && zip.indexOf(rule.zipPrefix) !== 0) return false;
+    if (rule.planIncludes && plan.toLowerCase().indexOf(rule.planIncludes) === -1) return false;
+    return true;
+  });
+}
+
+document.getElementById('checker-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var insurer = document.getElementById('insurer').value;
+  var plan = document.getElementById('plan').value.trim();
+  var zip = document.getElementById('zip').value.trim();
+  var err = document.getElementById('checker-error');
+
+  if (!insurer || !/^\d{5}$/.test(zip)) { err.style.display = 'block'; return; }
+  err.style.display = 'none';
+
+  var ending = document.getElementById('result-ending');
+  var unknown = document.getElementById('result-unknown');
+  ending.style.display = 'none';
+  unknown.style.display = 'none';
+  // Reset any previously submitted lead forms
+  document.querySelectorAll('.lead-capture').forEach(function(f) { f.style.display = ''; });
+  document.querySelectorAll('.success').forEach(function(s) { s.style.display = 'none'; });
+
+  var planDesc = plan ? insurer + ' \u201C' + plan + '\u201D' : 'your ' + insurer + ' plan';
+
+  if (isTerminated(insurer, plan, zip)) {
+    document.getElementById('ending-headline').textContent =
+      'Your plan is ending — December 31, 2026';
+    document.getElementById('ending-body').innerHTML =
+      'Based on the information you entered, <strong>' + planDesc + '</strong> in ZIP code ' + zip +
+      ' is scheduled to be discontinued on <strong>December 31, 2026</strong>. That means you need to choose new coverage — ' +
+      'but you have extra time, extra rights, and free help. Here is what matters:';
+    document.getElementById('ending-checklist').innerHTML =
+      '<li><strong>Keep your termination letter</strong> from ' + insurer + '. It is your proof of guaranteed-issue rights if you choose a Medigap policy.</li>' +
+      '<li><strong>Make your must-keep list:</strong> your doctors, your hospital, and every prescription you take. Check each one against any new plan before you enroll.</li>' +
+      '<li><strong>Compare your real options</strong> during your Special Enrollment Period (December 8, 2026 – February 28, 2027): a new Medicare Advantage plan, Original Medicare plus a Medigap policy, and a Part D drug plan.</li>' +
+      '<li><strong>If you want Medigap, use your guaranteed-issue window</strong> — apply while insurers must accept you without health questions.</li>' +
+      '<li><strong>Enroll in December if you can,</strong> so your new coverage begins January 1, 2027 with no gap.</li>';
+    ending.style.display = 'block';
+    ending.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    document.getElementById('unknown-body').innerHTML =
+      'We could not match <strong>' + planDesc + '</strong> in ZIP code ' + zip +
+      ' to a plan that is ending — but our information does not cover every plan in every county, so this is not a guarantee that your plan is continuing.';
+    unknown.style.display = 'block';
+    unknown.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+</script>
+
+</body>
+</html>
